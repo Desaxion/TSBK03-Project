@@ -19,7 +19,7 @@ int shininess = 5; // Shininess factor
 
 uniform int levels;
 
-const int shadingLevels = 3;
+const int shadingLevels = 4;
 vec3 colorLevels[shadingLevels + 1];
 
 

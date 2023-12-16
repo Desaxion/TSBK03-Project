@@ -1,6 +1,6 @@
 #version 330 core
 layout(triangles_adjacency) in;
-layout(triangle_strip, max_vertices = 6) out;
+layout(line_strip, max_vertices = 6) out;
 //layout(line_strip, max_vertices = 18) out;
 
 const int maxVerts = 6;
@@ -95,12 +95,12 @@ void main() {
 		So it contains a total of 4 triangles
 
 		*/
-		vec3 V0 = gl_PositionIn[0].xyz;
-vec3 V1 = gl_PositionIn[1].xyz;
-vec3 V2 = gl_PositionIn[2].xyz;
-vec3 V3 = gl_PositionIn[3].xyz;
-vec3 V4 = gl_PositionIn[4].xyz;
-vec3 V5 = gl_PositionIn[5].xyz;
+		vec3 V0 = gl_in[0].gl_Position.xyz;
+vec3 V1 = gl_in[1].gl_Position.xyz;
+vec3 V2 = gl_in[2].gl_Position.xyz;
+vec3 V3 = gl_in[3].gl_Position.xyz;
+vec3 V4 = gl_in[4].gl_Position.xyz;
+vec3 V5 = gl_in[5].gl_Position.xyz;
 vec3 N042 = cross( V4-V0, V2-V0 ); // the center triangle’s normal
 vec3 N021 = cross( V2-V0, V1-V0 );
 vec3 N243 = cross( V4-V2, V3-V2 );
@@ -113,25 +113,25 @@ if( dot( N042, N405 ) < 0. )
 N405 = vec3(0.,0.,0.) - N405;
 if( N042.z * N021.z <= 0. )
 {
-gl_Position = gl_ProjectionMatrix * vec4( V0, 1. );
+gl_Position = projection * vec4( V0, 1. );
 EmitVertex( );
-gl_Position = gl_ProjectionMatrix * vec4( V2, 1. );
+gl_Position = projection * vec4( V2, 1. );
 EmitVertex( );
 EndPrimitive( );
 }
 if( N042.z * N243.z <= 0. )
 {
-gl_Position = gl_ProjectionMatrix * vec4( V2, 1. );
+gl_Position = projection * vec4( V2, 1. );
 EmitVertex( );
-gl_Position = gl_ProjectionMatrix * vec4( V4, 1. );
+gl_Position = projection * vec4( V4, 1. );
 EmitVertex( );
 EndPrimitive( );
 }
 if( N042.z * N405.z <= 0. )
 {
-gl_Position = gl_ProjectionMatrix * vec4( V4, 1. );
+gl_Position = projection * vec4( V4, 1. );
 EmitVertex( );
-gl_Position = gl_ProjectionMatrix * vec4( V0, 1. );
+gl_Position = projection * vec4( V0, 1. );
 EmitVertex( );
 EndPrimitive( );
 }

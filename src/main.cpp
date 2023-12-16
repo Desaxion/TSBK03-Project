@@ -29,7 +29,7 @@ const int NONE  = 0;
 int main() {
 	do{
 	int input;
-	std::cout << "Please select line rendering model:\n" << "1. For inverted mesh method\n" << "2. Depth map and sobel filter\n" << "3. Adjacency outline in GS\n" << "\n9. Quit \nEnter your input: " << std::endl;
+	std::cout << "Please select line rendering model:\n" << "1. For inverted mesh method\n" << "2. Depth map and sobel filter\n" << "3. Adjacency outline in GS (NOT WORKING CURRENTLY)\n" << "\n9. Quit \nEnter your input: " << std::endl;
 	std::cin >> input;
 
 	if (input == QUIT) {
@@ -255,10 +255,11 @@ int main() {
 
 	const float lightStepSize = 0.01f;
 	const float lightStepScale = 0.03f;
+	glEnable(GL_DEPTH_TEST);
 	while(!glfwWindowShouldClose(window)) { //Check if window is instructed to close
 		//We redraw screen every frame, thus we clear the screen in beginning of every loop iteration
 		//Enabling depth test
-		glEnable(GL_DEPTH_TEST);
+
 		//glDisable(GL_DEPTH_TEST);
 		//calculating time variables
 		float currentFrame = static_cast<float>(glfwGetTime());
@@ -338,9 +339,9 @@ int main() {
 
 			// Render two passes (when the input is selected to Depth_Sobel, we render first to the fbo, and the second time to the screen)
 			for (int i = 0; i < renderingPasses; i++) {
-					selectedShader = &shader;
+				selectedShader = &shader;
 				//We check how many rendering passes, so that we can render the outline first and the other one on top
-				if (renderingPasses > 0 && i == order) {
+				if (renderingPasses > 1 && i == order) {
 					selectedShader = outlineShader;	
 					if (input == DEPTH_SOBEL) {
 						//selectedShader = &shader;
@@ -381,6 +382,7 @@ int main() {
 				glEnable(GL_BLEND); // Enable blending
 				glViewport(0, 0, WIDTH, HEIGHT);
 				frameBufferShader.use();
+				frameBufferShader.setBool("enabled", shadingTypes[4]);
 				glBindTexture(GL_TEXTURE_2D, depthTexture);
 				glBindVertexArray(rectVAO);
 				glDrawArrays(GL_TRIANGLES, 0, 6);
