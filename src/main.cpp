@@ -20,7 +20,7 @@ const unsigned int HEIGHT = DEFAULT_HEIGHT; //1000
 
 const int INVERTED_MESH = 1;
 const int DEPTH_SOBEL = 2;
-const int ADJACENCY_OUTLINE = 3;
+const int ADJACENCY_OUTLINE = 3; // THIS OPTION DOES NOT WORK AS WISHED. 
 const int QUIT = 9;
 
 const int NONE  = 0;
@@ -325,7 +325,7 @@ int main() {
 
 			order = 0;
 		}
-		if (input == ADJACENCY_OUTLINE) {
+		if (input == ADJACENCY_OUTLINE) { // THIS OPTION DOES NOT WORK AS WISHED. DO NOT SELECT.
 			renderingPasses = 2;
 			outlineShader = &adjacencyOutlineShader;
 			order = 1;
